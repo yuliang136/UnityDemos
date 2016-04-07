@@ -46,20 +46,28 @@ namespace Assets.Scripts
 
         void Start()
         {
+            Debug.Log("Start");
+
             TalkingDataGA.OnStart(AppID, Channelld);
             TDGAAccount account = TDGAAccount.SetAccount(TalkingDataGA.GetDeviceId());
 
             account.SetAccountType(AccountType.ANONYMOUS);
+
+            Debug.Log("Start End");
         }
 
         public void OnApplicationPause(bool pauseState)
         {
             if (pauseState)
             {
+                Debug.Log("pauseState");
+
                 TalkingDataGA.OnEnd();
             }
             else
             {
+                Debug.Log("Recover");
+
                 TalkingDataGA.OnStart(AppID, Channelld);
                 TDGAAccount account = TDGAAccount.SetAccount(TalkingDataGA.GetDeviceId());
             }
@@ -67,6 +75,8 @@ namespace Assets.Scripts
 
         public void OnDestroy()
         {
+            Debug.Log("OnDestroy");
+
             TalkingDataGA.OnEnd();
         }
         
