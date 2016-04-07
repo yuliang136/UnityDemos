@@ -29,9 +29,9 @@ namespace Assets.Scripts
 
         #region Date Variables
 
-        private string AppID = "30EABAC26D6983EEE019552C2DD97C93";
+        private string AppID = "A8DDCA092253E2BF24795D89A491943D";
 
-        private string Channelld = "VRHorrorHouse";
+        private string Channelld = "TestTDKillProgress";
 
         #endregion
 
