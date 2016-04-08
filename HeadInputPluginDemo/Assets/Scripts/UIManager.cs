@@ -11,14 +11,14 @@ public class UIManager : MonoBehaviour
 {
 
     // 设置声音播放的方式.
-    public GameObject _goEarphonePlug;
+    //public GameObject _goEarphonePlug;
 
     public void Awake()
     {
         Object.DontDestroyOnLoad(this);
 
         // 默认值为3
-        YLManager.Instance._nVolume = 3;
+        //YLManager.Instance._nVolume = 3;
     }
 
 
@@ -31,14 +31,14 @@ public class UIManager : MonoBehaviour
         //KOFReceiveAndroidEvent.
         NotificationCenter.Instance.AddEventHandler(EventEnums.OnSingleClick, HandleEarphoneClick);
 
-        NotificationCenter.Instance.AddEventHandler(EventEnums.OnEarphonePlug, HandleEarphonePlug);
+        //NotificationCenter.Instance.AddEventHandler(EventEnums.OnEarphonePlug, HandleEarphonePlug);
     }
 
     public void OnDisable()
     {
         NotificationCenter.Instance.RemoveEventHandler(EventEnums.OnSingleClick, HandleEarphoneClick);
 
-        NotificationCenter.Instance.RemoveEventHandler(EventEnums.OnEarphonePlug, HandleEarphonePlug);
+        //NotificationCenter.Instance.RemoveEventHandler(EventEnums.OnEarphonePlug, HandleEarphonePlug);
     }
 
     public void PointerEnter(GameObject goSel)
@@ -51,34 +51,34 @@ public class UIManager : MonoBehaviour
         _goSelect = null;
     }
 
-    /// <summary>
-    /// 处理耳机插拔事件.
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void HandleEarphonePlug(object sender, EventArgs e)
-    {
-        if (YLManager.Instance._bEarphonePlug)
-        {
-            // 接上耳机时 显示界面.
-            Debug.Log("EarphonePlug Open");
-            _goEarphonePlug.SetActive(true);
+    ///// <summary>
+    ///// 处理耳机插拔事件.
+    ///// </summary>
+    ///// <param name="sender"></param>
+    ///// <param name="e"></param>
+    //private void HandleEarphonePlug(object sender, EventArgs e)
+    //{
+    //    if (YLManager.Instance._bEarphonePlug)
+    //    {
+    //        // 接上耳机时 显示界面.
+    //        Debug.Log("EarphonePlug Open");
+    //        _goEarphonePlug.SetActive(true);
 
-            // 插上耳机 默认设置为耳机播放.
-            // 发送事件为耳机播放.
-            NotificationCenter.Instance.NotifyEvent(EventEnums.OnEarphonePlay, null);
-        }
-        else
-        {
-            // 去掉耳机时 隐藏界面.
-            Debug.Log("EarphonePlug Close");
-            _goEarphonePlug.SetActive(false);
+    //        // 插上耳机 默认设置为耳机播放.
+    //        // 发送事件为耳机播放.
+    //        NotificationCenter.Instance.NotifyEvent(EventEnums.OnEarphonePlay, null);
+    //    }
+    //    else
+    //    {
+    //        // 去掉耳机时 隐藏界面.
+    //        Debug.Log("EarphonePlug Close");
+    //        _goEarphonePlug.SetActive(false);
 
-            // 拔掉耳机 直接设置为外放.
-            // 发送事件为外放.
-            NotificationCenter.Instance.NotifyEvent(EventEnums.OnSpeakerPlay, null);
-        }
-    }
+    //        // 拔掉耳机 直接设置为外放.
+    //        // 发送事件为外放.
+    //        NotificationCenter.Instance.NotifyEvent(EventEnums.OnSpeakerPlay, null);
+    //    }
+    //}
 
     /// <summary>
     /// 由耳机交互单例发送过来的事件.
@@ -103,43 +103,29 @@ public class UIManager : MonoBehaviour
 
                 // 需要在事件里传递参数.
 
-                YLManager.Instance._nVolume++;
-                if (YLManager.Instance._nVolume > 10)
+                AudioDataSingleton.Instance._nVolume++;
+                if (AudioDataSingleton.Instance._nVolume > 10)
                 {
-                    YLManager.Instance._nVolume = 10;
+                    AudioDataSingleton.Instance._nVolume = 10;
                 }
 
                 Debug.Log("AddVolume");
 
-                NotificationCenter.Instance.NotifyEvent(EventEnums.OnChangeVolume,null);
+                AudioDataSingleton.Instance.InvokeChangeVolume(AudioDataSingleton.Instance._nVolume);
+
+                //NotificationCenter.Instance.NotifyEvent(EventEnums.OnChangeVolume,null);
             }
             else if (_goSelect.name == "ReduceVolume")
             {
-                YLManager.Instance._nVolume--;
-                if (YLManager.Instance._nVolume < 0)
+                AudioDataSingleton.Instance._nVolume--;
+                if (AudioDataSingleton.Instance._nVolume < 0)
                 {
-                    YLManager.Instance._nVolume = 0;
+                    AudioDataSingleton.Instance._nVolume = 0;
                 }
 
                 Debug.Log("ReduceVolume");
 
-                NotificationCenter.Instance.NotifyEvent(EventEnums.OnChangeVolume, null);
-            }
-            else if (_goSelect.name == "UseSpeaker")
-            {
-                // 发送使用Speaker消息,关闭界面
-                NotificationCenter.Instance.NotifyEvent(EventEnums.OnSpeakerPlay, null);
-
-                _goEarphonePlug.SetActive(false);
-
-            }
-            else if (_goSelect.name == "UseEarphone")
-            {
-                // 发送使用Earphone消息,关闭界面
-                NotificationCenter.Instance.NotifyEvent(EventEnums.OnEarphonePlay, null);
-
-                _goEarphonePlug.SetActive(false);
-
+                AudioDataSingleton.Instance.InvokeChangeVolume(AudioDataSingleton.Instance._nVolume);
             }
         }
     }
