@@ -5,9 +5,13 @@ public class CheckMouseDown : MonoBehaviour
 {
 
 
+
+
     // OnMouseEnter is called when the mouse entered the GUIElement or Collider
     public void OnMouseEnter()
     {
-        Debug.Log("Mouse Down");
+        //string strShow = string.Format("Mouse Down {0}", this.gameObject.name);
+
+        //Debug.Log(strShow);
     }
 }
