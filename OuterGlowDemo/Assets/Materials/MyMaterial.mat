@@ -170,7 +170,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.6568988, g: 0.70089334, b: 0.99264705, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
           name: _SilhouetteColor
@@ -178,4 +178,4 @@ Material:
       data:
         first:
           name: _AtmoColor
-        second: {r: 0.5588235, g: 1, b: 0.7991886, a: 1}
+        second: {r: 0.41176456, g: 0.2647059, b: 1, a: 1}
